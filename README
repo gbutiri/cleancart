@@ -1,0 +1,103 @@
+Problem:
+Build website for user.
+
+Why did I write this code?
+Too many times I've been given the task to start a new project that usually requires 
+some sort of user authentication. I thought, why not build a framework around it? Why 
+not just install and run with it?
+
+Why not use 3rd party frameworks?
+3rd party frameworks have their own language to learn. It usually takes months to master
+them. Not just install and run, but master... And, by the time you're done mastering it,
+version 2 comes out. Or version 1 is no longer supported. 3rd party frameworks are 
+bulky, require dependencies (composer, propel, caching, etc). My solution is something 
+that only depends on some sort of a quick LAMP environment. And that's it.
+
+Solution:
+Well, I created a framework that's ready out of the box, and evolves as PHP evolves. No
+more constraints. 
+
+Why am I having multiple steps to install?
+1. These steps only require to run one time. I don't want to clog up the code base with
+code that will only run once
+2. One day, I shall have an install file like wordpress. Until then, configure to your 
+heart's content. It's not that hard. Do the work, you lazy bums!
+
+Update 1 (10/8/14):
+I did add the install.php file which will delete itself upon successful completion. 
+Still make sure you have a databse. 
+
+------------------ SEE CONFIG FILE FIRST!!! ------------------ 
+
+I also added user token / salt authenticaion. The salt does nothing yet, but I will make 
+it do something soon enough.Right now it just checks against a login token that gets set 
+everytime a user properly logs in. If you try to check a logged in page from a different 
+machine / browser, you will be logged out.
+
+Pre Settings:
+You will need WAMP, MAMP, XAMP or some sort of a LAMP environment.
+
+Steps to installation.
+
+1. copy the config sample to config.php and modify accordingly. (DO NOT ADD TO GIT)
+
+2. required apache modules:
+rewrite_module
+expires_module
+headers_module
+filter_module
+
+3. create database:
+dbname or whatever is in the config file
+
+4. Enable mysqli for databases
+
+5. Create Cache Folders (DO NOT ADD TO GIT):
+/cache/
+/cache/combine
+
+These are for the combination of the css and js files. Groupring them into single http 
+requests is awesome.
+
+** The benefits **
+- less than a second to clone.
+- quick development turnaround time.
+- easy to understand code.
+- funnel control opened wide at both ends.
+- no confusing new languages to learn. Simple.
+
+** The features **
+- ajax controller
+- general functions
+  - getDataURI => convert any image into data-uri
+  - friendlyURL => turn any text into a friendly URL (regex)
+  - birthday => a check that returns the differnce in years for a date (birthday 
+    checks)
+  - get_days => a function to get number of days between now and a specified date.
+  - checkEmail => check email format on server side.
+  - checkPassword => check password requirements. Too long, too short, not enough 
+    special characters, etc.
+  - checkUsername => similar to checkPassword, but for usernames.
+  - checkValidDate => check to see if the specified date is valid.
+  - createRandomPassword => if you want to generate a random alpha numeric string.
+  - makeUserFolder => in case you have to create some nested folders for your users.
+  - cacheModule => turn an "include" file into an html cached module. Using file 
+    caching for exceptions. i.e. A static form on a page.
+  - cacheDynamicModule => same as above, but works with dynamic paths (user profile 
+    cached).
+  - burstCache => Clears both of the above stored files.
+  - makeIfNoExist => recursively create a folder if it does not exist. (Kind of like 
+    makeUserFolder)
+  - resizeAttachment => resize images based on some parameters. Resizing to fill in and
+    cropping horizontally as well as vertically.
+  - getZipInfo => using google map api to get location information (city state lat 
+    long)
+  - getLatLong => same as above (only get lat long). Could be combined I suppose.
+- modular SPA design
+- root folder single pages easy to spot
+- sql-core that runs mysqli prepared statements for ease of use
+  - example query call:
+  - $sql = "SELECT id, fname, lname FROM users WHERE username LIKE ?";
+  - $users = sqlGet( $sql, 's', array( trim( $_POST['username'] ) ) );
+  - echo "User's first name is: " . $users[0]['fname'];
+- No confusing new languages to learn. Simple.
