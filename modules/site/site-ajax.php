@@ -94,15 +94,56 @@ function install() {
     }
     $sql_chk_string = implode(",",$sql_chk);
     
+    $sql = "DROP TABLE IF EXISTS `signup`;";
+    sqlRun($sql,'',array());
+    $sql = "DROP TABLE IF EXISTS `products`;";
+    sqlRun($sql,'',array());
+    $sql = "DROP TABLE IF EXISTS `categories`;";
+    sqlRun($sql,'',array());
+    $sql = "DROP TABLE IF EXISTS `admins`;";
+    sqlRun($sql,'',array());
+    
     $sql = "CREATE TABLE IF NOT EXISTS signup (
         `id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         ".$sql_ue."
         `password` VARCHAR(255),
         ".$sql_chk_string."
     );";
-    
     sqlRun($sql,'',array());
-    unlink(_DOCROOT.'/install.php');
+    
+    $sql = "CREATE TABLE `admins` (
+      `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+      `email` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+      `password` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+      `salt` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+      `token` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+      PRIMARY KEY (`id`)
+    )";
+    sqlRun($sql,'',array());
+    
+    $sql = "CREATE TABLE `categories` (
+      `cat_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+      `cat_name` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+      `cat_descr` text COLLATE utf8_bin,
+      `cat_enabled` tinyint(1) DEFAULT NULL,
+      PRIMARY KEY (`cat_id`)
+    );";
+    sqlRun($sql,'',array());
+    
+    $sql = "CREATE TABLE `products` (
+      `prod_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+      `prod_name` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+      `prod_descr` text COLLATE utf8_bin,
+      `prod_price` double DEFAULT NULL,
+      `prod_enabled` tinyint(1) DEFAULT NULL,
+      PRIMARY KEY (`prod_id`)
+    );";
+    sqlRun($sql,'',array());
+    
+    $sql = "insert  into `admins`(`email`,`password`,`salt`,`token`) values ('gbutiri@yahoo.com','1adbb3178591fd5bb0c248518f39bf6d','','');";
+    sqlRun($sql,'',array());
+    
+    //unlink(_DOCROOT.'/install.php');
     
 	echo json_encode(array(
         'message' => 'good',
