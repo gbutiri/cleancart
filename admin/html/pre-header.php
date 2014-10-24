@@ -8,7 +8,7 @@ if (_SITEADMIN != '') {
     $user = sqlGet($sql_s,'ss',array($_SESSION['site_admin'],$_SESSION['site_user_token']));
     // if not equal with what's in database, redirect.
     // if equal what's in db, carry on!
-    //var_dump($user);
+    var_dump($user);
 
     if (count($user) == 0) {
         session_destroy();

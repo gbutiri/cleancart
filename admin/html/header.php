@@ -6,8 +6,8 @@
     $more_js = '';
     if (strrpos($_SERVER['SCRIPT_FILENAME'],'/modular.php') !== false) {
         // module was built in the modular.php file.
-        $more_css .= ',/admin/modules/'.$module.'/'.$module.'-main.css';
-        $more_js .= ',/admin/modules/'.$module.'/'.$module.'-main.js';
+        $more_css .= ',/modules/admin_'.$module.'/admin_'.$module.'-main.css';
+        $more_js .= ',/modules/admin_'.$module.'/admin_'.$module.'-main.js';
     }
     ?>
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">

@@ -191,6 +191,9 @@ nav.modular .modular
     font-size: 14px;
     float: left;
 }
+.ajaxform .field-wrapper label.w160 {
+    width: 160px;
+}
 .w285 {
     width: 285px;
 }
